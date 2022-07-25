@@ -95,28 +95,3 @@ function checkDisableButton (index) {
     nextBtn.disabled = false;
   }
 }
-/* 
-DO NOT USE NEW FUNCTION FOR THIS!!!
-
-function slideHandler() {
-  let _currentSlideIndex = 0;
-
-  this.getSlideIndex = function () {
-    return _currentSlideIndex;
-  }
-
-  this.setSlideIndex = function (pageIndex) {
-    _currentSlideIndex = pageIndex;
-  }
-
-  this.increaseSlideIndex = function() {
-     _currentSlideIndex = (++_currentSlideIndex % imageSlides.length);
-    return _currentSlideIndex;
-  }
-
-  this.decreaseSlideIndex = function() {
-    _currentSlideIndex = (_currentSlideIndex <= 0) ? (imageSlides.length - 1) : --_currentSlideIndex;
-    return _currentSlideIndex;
-  }
-}
- */
