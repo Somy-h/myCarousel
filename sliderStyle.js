@@ -6,7 +6,28 @@ const titleSlides = document.querySelectorAll('.title-slide');
 const titleText = document.querySelectorAll('.title-text');
 const navBtnContainer = document.querySelector('.nav-buttons-container');
 
-const slideIndex = new slideHandler();
+const slideHandler = function() {
+  let currentSlideIndex  = 0;
+  function changeBy(val) {
+    return currentSlideIndex += val;
+  }
+  return {
+    increaseSlideIndex: function() {
+      return changeBy(1);
+    },
+    decreaseSlideIndex: function() {
+      return changeBy(-1);
+    },
+    getSlideIndex: function() {
+      return currentSlideIndex;
+    },
+    setSlideIndex: function(pageIndex) {
+      currentSlideIndex = pageIndex;
+    }
+  }
+};
+
+const slideIndex = slideHandler();
 prevBtn.disabled = true;
 
 let navBtns = createNavigationButtons();
@@ -32,8 +53,8 @@ function displaySlides(direction, pageIndex = -1) {
     let index = 0;
     const slideWidth = imageSlidesContainer.clientWidth;
     
-    titleSlides[slideIndex.beforeSlideIndex()].style.opacity = 0;
-    navBtns[slideIndex.beforeSlideIndex()].classList.remove('active');
+    titleSlides[slideIndex.getSlideIndex()].style.opacity = 0;
+    navBtns[slideIndex.getSlideIndex()].classList.remove('active');
     if (pageIndex >= 0) {
       slideIndex.setSlideIndex(pageIndex);
       index = pageIndex;
@@ -41,9 +62,17 @@ function displaySlides(direction, pageIndex = -1) {
     else {
       if (direction === 'prev') {
         index = slideIndex.decreaseSlideIndex();
-      } 
+        if (index < 0) {
+          slideIndex.setSlideIndex(imageSlides.length - 1);
+          index = slideIndex.getSlideIndex();
+        } 
+      }
       else if (direction === 'next') {
         index = slideIndex.increaseSlideIndex();
+        if (index > imageSlides.length - 1) {
+          slideIndex.setSlideIndex(0);
+          index = slideIndex.getSlideIndex();
+        }
       }
     }
     imageSlidesContainer.style.transform = `translateX(-${index * slideWidth}px)`;
@@ -66,11 +95,13 @@ function checkDisableButton (index) {
     nextBtn.disabled = false;
   }
 }
+/* 
+DO NOT USE NEW FUNCTION FOR THIS!!!
 
 function slideHandler() {
   let _currentSlideIndex = 0;
 
-  this.beforeSlideIndex = function () {
+  this.getSlideIndex = function () {
     return _currentSlideIndex;
   }
 
@@ -88,3 +119,4 @@ function slideHandler() {
     return _currentSlideIndex;
   }
 }
+ */
