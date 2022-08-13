@@ -33,6 +33,7 @@ prevBtn.disabled = true;
 let navBtns = createNavigationButtons();
 prevBtn.addEventListener('click', () => displaySlides('prev'));
 nextBtn.addEventListener('click', () => displaySlides('next'));
+window.addEventListener('resize', () => reSizeSide());
 
 function createNavigationButtons() {
   let result = [];
@@ -47,6 +48,11 @@ function createNavigationButtons() {
     result.push(btnElement);
   }
   return result;
+}
+
+function reSizeSide() {
+  //console.log("resize");
+  displaySlides("", slideIndex.getSlideIndex());
 }
 
 function displaySlides(direction, pageIndex = -1) {
